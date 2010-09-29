@@ -72,7 +72,7 @@ class Integer
     self * (self + 1) / 2
   end
   def isPrime?
-    return false if self < 0  # To be simple.  Really, we could do abs to |self| and test that for primality.
+    return false if self <= 1  # To be simple.  Really, we could do abs to |self| and test that for primality.
     (2..(Math.sqrt(self).ceil)).each do |n|
       if (self % n == 0)
         return false
@@ -126,6 +126,9 @@ class Integer
     return Math.sqrt(8*self+1) % 1 == 0 ? true : false
   end
   
+  def reverse
+    return self.to_s.reverse.to_i
+  end
   # Originally swiped from http://snippets.dzone.com/posts/show/6101
   def choose(k)
     self.factorial / (k.factorial * (self-k).factorial)
