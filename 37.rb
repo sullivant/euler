@@ -7,70 +7,58 @@ left: 3797, 379, 37, and 3.
 Find the sum of the only eleven primes that are both truncatable from left to right and right to left.
 NOTE: 2, 3, 5, and 7 are not considered to be truncatable primes.
 
-TODO: Add in checks to see if we've done this number (n) before.  (eg: with 3797 - at 379, we know that's prime already.)
 =end
 
-$allPrime = true
 gotPrimes = Array.new
-gotBad = Array.new
-
-def setAllPrime(status)
-  # If it's already false, leave it false
-  if $allPrime == true
-    $allPrime = status
-  end
-end
+notPrimes = Array.new
 
 
-11.upto(10000000) do |d|
+1.upto(10000000) do |d|
   if (!d.isPrime?)
+    notPrimes.push(d)
+    next
+  end
+  gotPrimes.push(d)
+  
+  allPrime = true
+  
+  cLeft   = d.to_s.split('')
+  cRight  = d.to_s.split('')
+ 
+  #puts "Working: #{d}"
+ 
+  # Start splitting off characters left and then right
+  while(cLeft.shift) do
+    n = cLeft.join.to_i
+    next if (n == 0)
+    # Have we seen this number before?
+    if(gotPrimes.include?(n))
+      next
+    elsif(notPrimes.include?(n))
+      allPrime = false
+      break
+    end
+  end
+  
+  # Break early if we're already false
+  if (allPrime == false)
     next
   end
   
-  $allPrime = true
-  
-  a = d.to_s.split('')
-  while(a.pop) do
-    r = a.join.to_i
-    next if (r==0)
-    next if (gotPrimes.include?(r))
-    if(gotBad.include?(r))
-      setAllPrime(false)
+  while(cRight.pop) do
+    n = cRight.join.to_i
+    next if (n == 0)  
+    # Have we seen this number before?
+    if(gotPrimes.include?(n))
+      next
+    elsif(notPrimes.include?(n))
+      allPrime = false
       break
     end    
-    if(r.isPrime?)
-      gotPrimes.push(r)
-      setAllPrime(true)
-    else
-      gotBad.push(r)
-      setAllPrime(false)
-      break
-    end
   end
   
-  next if($allPrime == false)
-  
-  a = d.to_s.split('')
-  while(a.shift) do
-    r = a.join.to_i
-    next if (r==0)
-    next if (gotPrimes.include?(r))
-    if(gotBad.include?(r))
-      setAllPrime(false)
-      break
-    end
-    if(r.isPrime?)
-      gotPrimes.push(r)
-      setAllPrime(true)
-    else 
-      gotBad.push(r)
-      setAllPrime(false)
-      break
-    end
+  if(allPrime)
+    puts "\tGot: #{d}"
   end
-  
-  if ($allPrime)
-    puts "Got: #{d}"
-  end  
 
 end
