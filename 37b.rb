@@ -12,57 +12,65 @@ NOTE: 2, 3, 5, and 7 are not considered to be truncatable primes.
 gotPrimes = Array.new
 notPrimes = Array.new
 
-
-1.upto(10000000) do |d|
+1.upto(100000000) do |d|
   if(d%50000 == 0)
     puts "#{d} @ #{Time.now}"
   end
-  
+  next if (!d.to_s.match('^(1|3|5|7|9)+$'))
   if (!d.isPrime?)
-    notPrimes.push(d)
     next
   end
-  gotPrimes.push(d)
-  
-  allPrime = true
   
   cLeft   = d.to_s.split('')
   cRight  = d.to_s.split('')
  
-  #puts "Working: #{d}"
+  allPrime = true
  
   # Start splitting off characters left and then right
   while(cLeft.shift) do
     n = cLeft.join.to_i
     next if (n == 0)
-    # Have we seen this number before?
     if(gotPrimes.include?(n))
       next
     elsif(notPrimes.include?(n))
       allPrime = false
       break
     end
+    if (!n.isPrime?)
+      allPrime = false
+      notPrimes.push(n)
+      break
+    else
+      gotPrimes.push(n)
+    end    
   end
-  
-  # Break early if we're already false
-  if (allPrime == false)
+   
+  if (!allPrime)
     next
   end
   
   while(cRight.pop) do
     n = cRight.join.to_i
     next if (n == 0)  
-    # Have we seen this number before?
     if(gotPrimes.include?(n))
       next
     elsif(notPrimes.include?(n))
       allPrime = false
       break
+    end
+    if (!n.isPrime?)
+      allPrime = false
+      notPrimes.push(n)
+      break
+    else
+      gotPrimes.push(n)
     end    
   end
   
   if(allPrime)
     puts "\tGot: #{d}"
+    break if(d > 739397)
   end
+  
 
 end
