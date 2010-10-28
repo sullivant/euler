@@ -11,3 +11,13 @@ Find the next triangle number that is also pentagonal and hexagonal.
 
 =end
 
+def triangle(n)
+  return n*(n+1)/2
+end
+def pentagonal(n)
+  return n*(3*n-1)/2
+end
+def hexagonal(n)
+  return n*(2*n-1)
+end
+
