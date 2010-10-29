@@ -12,19 +12,37 @@ d1*d10*d100*d1000*d10000*d100000*d1000000
 
 =end
 
-tot = 1
-dig = 1
-sta = 1
-fin = 10000000
-sta.upto(fin) do |n|
-  n.to_s.split(//).each do |x|
-    #puts "dig #{dig}: \t#{x}"
-    if dig == 10 || dig == 100 || dig == 1000 || dig == 10000 || dig == 100000 || dig == 1000000
-      tot = tot * x.to_i
-    end
-    sta += 1
-    dig += 1
+=begin
+
+a = Array.new()
+a << 0
+1.upto(1000000) do |n|
+  n.to_s.split(//).each do |y|
+    a<<y
   end
 end
 
-puts tot
+puts a[1]
+puts a[100]
+puts a[1000]
+puts a[10000]
+puts a[100000]
+puts a[1000000]
+
+puts 1*5*3*7*2*1
+=end
+
+def digit(n)
+  i = 1
+  p = 0
+  s = ""
+  loop do
+    s = i.to_s
+    p += s.length
+    break if p >= n
+    i += 1
+  end
+  s[s.length-1 - p + n, 1].to_i
+end
+
+puts digit(1) * digit(10) * digit(100) * digit(1000)  * digit(10000) * digit(100000) * digit(1000000)
