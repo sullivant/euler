@@ -126,6 +126,16 @@ class Integer
     # Lets do 9.0 % 1 and test for zero instead.
     return Math.sqrt(8*self+1) % 1 == 0 ? true : false
   end
+  def isPentagonal?
+    # If n is natural, then self is pentagonal
+    # n = sqrt(24x+1)+1/6
+    return (Math.sqrt(24*self+1)+1)/6 % 1 == 0 ? true : false
+  end
+  def isHexagonal?
+    # If n is natural, then self is pentagonal
+    # n = sqrt(8x+1)+1/4
+    return (Math.sqrt(8*self+1)+1)/4 % 1 == 0 ? true : false
+  end
   
   def reverse
     return self.to_s.reverse.to_i
