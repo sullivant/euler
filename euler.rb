@@ -15,24 +15,21 @@ class Array
     else return self.length - 1
     end
   end
-  def sum
-    inject(0) do |result, i|
-      result + i
-    end
+  def sum # returns the sum of all array members
+    return self.reduce(:+)
   end
-  def product
+  def product # returns the product of all array members
     inject(1) do |result, i|
       result * i
     end
   end
-  def permutations
+  def permutations # returns an array of the permutations of the array; recursive.
     return [self] if size < 2
     perm = []
     each {|e| (self - [e]).permutations.each {|p| perm << ([e] + p) } }
     perm
   end
-  # returns true if all elements of array, as Integers, are prime
-  def isPrime?
+  def isPrime? # returns true if all elements of array, as Integers, are prime
     p = true
     self.each do |n|
       p = false if !n.to_i.isPrime?
@@ -82,7 +79,11 @@ class Integer
     return true
   end
   def digits
-    return self.to_s.split(//)
+    a = []
+    self.to_s.split(//).each do |i|
+      a << i.to_i
+    end
+    return a
   end 
   def totient # The count of numbers 1 upto n that are coprime to n
     x = self
