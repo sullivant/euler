@@ -38,6 +38,16 @@ class Array
   end
 end
 
+class String
+  def digits
+    a = []
+    self.to_s.split(//).each do |i|
+      a << i.to_i
+    end
+    return a
+  end 
+end
+
 class Integer
   def divisors
       divisors = [1]

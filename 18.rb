@@ -1,4 +1,4 @@
-require 'euler.rb'
+require_relative 'euler.rb'
 
 triangle = [
 %w{75},
