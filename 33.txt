@@ -1,0 +1,4 @@
+		Possible Match in 16/64 -> 1/4
+		Possible Match in 19/95 -> 1/5
+		Possible Match in 26/65 -> 2/5
+		Possible Match in 49/98 -> 4/8
