@@ -15,3 +15,19 @@
 
 require_relative 'euler'
 
+# Needs to start with 9.  Then the fixed portion needs to be multiplied by 1,2..
+#
+# Fixed of various digit lengths:
+# 98x1 = 98 98x2 = 196 98x3 = 294 98x4 = 392 (11 digits now after concat) WRONG
+# 987x1 = 987 987x2 = 1974 987x3 = 3961 (11 digits after concat) WRONG
+# 9876x1 = 9876 9876x2 = 19752 = (9 digits after concat) CORRECT
+#
+# Fixed then "starts" at 9876 and we can count down, multiplying each by 2,
+# concatenating, and then seeing if pandigital.  9123 has to be stopping point
+# in the pairs also.
+
+(9876).downto(9123).each do |i|
+	result = [i,2*i].join().to_i
+	puts result if result.isPandigital?
+end
+

@@ -147,7 +147,10 @@ class Integer
     # n = sqrt(8x+1)+1/4
     return (Math.sqrt(8*self+1)+1)/4 % 1 == 0 ? true : false
   end
-  
+  def isPandigital?
+	# A number n is pandigital if the set of all of its digits is 1-9.
+	return self.to_s.split(//).sort.join('') == '123456789'
+  end
   def reverse
     return self.to_s.reverse.to_i
   end
