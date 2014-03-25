@@ -135,7 +135,8 @@ class Integer
   end
   def isTriangle?
     # A number n is triangle if 8n+1 is a square of something.
-    # Can't just do .is_a?(Integer) because of 9.0 being a valid value, however the remainder means it's a float.
+    # Can't just do .is_a?(Integer) because of 9.0 being a valid value, however 
+	# the remainder means it's a float.
     # Lets do 9.0 % 1 and test for zero instead.
     return Math.sqrt(8*self+1) % 1 == 0 ? true : false
   end
@@ -145,7 +146,7 @@ class Integer
     return (Math.sqrt(24*self+1)+1)/6 % 1 == 0 ? true : false
   end
   def isHexagonal?
-    # If n is natural, then self is pentagonal
+    # If n is natural, then self is hexagonal
     # n = sqrt(8x+1)+1/4
     return (Math.sqrt(8*self+1)+1)/4 % 1 == 0 ? true : false
   end
