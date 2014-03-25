@@ -23,7 +23,7 @@ class Array
       result * i
     end
   end
-  def permutations # returns an array of the permutations of the array; recursive.
+  def permutations # returns an array of permutations of the array; recursive.
     return [self] if size < 2
     perm = []
     each {|e| (self - [e]).permutations.each {|p| perm << ([e] + p) } }
@@ -81,6 +81,8 @@ class Integer
   def isPrime?
     return false if self <= 1  # To be simple.  Really, we could do abs to |self| and test that for primality.
     return true if self == 2
+	return false if (self.digits.sum % 3 == 0) # Sum of digits divisible by 3
+	return false if (self.digits.sum % 9 == 0) # Sum of digits divisible by 9
     (2..(Math.sqrt(self).ceil)).each do |n|
       if (self % n == 0)
         return false
@@ -148,8 +150,21 @@ class Integer
     return (Math.sqrt(8*self+1)+1)/4 % 1 == 0 ? true : false
   end
   def isPandigital?
-	# A number n is pandigital if the set of all of its digits is 1-9.
-	return self.to_s.split(//).sort.join('') == '123456789'
+	# A d-digit number n is pandigital if the set of all of its digits is 1-n.
+	w = ""
+	d = self.digits
+	s = 1
+	l = d.length
+	
+	# Check for the existence of a digit 0 - with a length of 10, implying
+	# '1234567890' - adjust accordingly
+	if (d.include?(0)) 
+		l = l - 1
+		s = 0
+	end
+	
+	(s..l).each{|n| w += n.to_s}
+	return self.to_s.split(//).sort.join('') == w
   end
   def reverse
     return self.to_s.reverse.to_i
