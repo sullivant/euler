@@ -12,13 +12,25 @@
 
 require_relative('euler')
 
+# I really don't want to brute force this.  There must be a relationship
+# between the distance between two of the Pn and Pn+x other than it being a 
+# number divisible by 3.
+
 def makePentagonal(n)
 	return (n*((3*n)-1))/2
 end
 
-pentagonalNumbers = []
-(1..10).each do |n|
-	pentagonalNumbers << makePentagonal(n)
+pentNbrs = []
+(1..10000).each do |n|
+	pentNbrs << makePentagonal(n)
 end
 
+pentNbrs.each do |pj|
+	pentNbrs.delete(pj)
+	pentNbrs.each do |pk|
+		next unless (pj+pk).isPentagonal?
+		next unless (pj-pk).abs.isPentagonal?
+		puts "#{pj}:#{pk}\ts:#{pj+pk}\td:#{(pj-pk).abs}"
+	end
+end
 
