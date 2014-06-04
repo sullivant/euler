@@ -81,6 +81,7 @@ class Integer
   def isPrime?
     return false if self <= 1  # To be simple.  Really, we could do abs to |self| and test that for primality.
     return true if self == 2
+    return true if self == 3
 	return false if (self.digits.sum % 3 == 0) # Sum of digits divisible by 3
 	return false if (self.digits.sum % 9 == 0) # Sum of digits divisible by 9
     (2..(Math.sqrt(self).ceil)).each do |n|
