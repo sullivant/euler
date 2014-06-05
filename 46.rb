@@ -11,36 +11,37 @@
 
 require_relative('euler')
 include Math
+require 'prime'
 
-# Get all primes lower than n
-# Find diff between that prime p and n
-# If diff is a square number, it fits
-# If diff is not a square number, try next lower prime
-# IF ALL EXHAUSTED THEN n FITS THE PROBLEM QUESTION
+# Generate a list of primes.
+# Get all primes lower than n.
+# Find diff between that prime p and n.
+# If diff is twice a square, then it fits.
+# First that does not fit is the number.
 
-foundPrimes   = []
-fitComposites = []
-gotOne        = false # Tested to see if we got at least one solution
+def isTwiceSquare(nbr)
+  return (Math.sqrt((nbr/2)) % 1 == 0) ? true : false
+end
 
+primeList = Prime.take(10000)
+notFound  = true
+result    = 19
 
-180000.upto(1800000) do |n|
-  next if n%2 == 0  # Skip evens
-  if n.isPrime?     # Save this prime for later
-    foundPrimes << n
-  else              # This is a composite.
-    foundPrimes.each do |f|
-      r = (n-f)   # Remainder (ex: 15-7 = 8)
-      m = r/2     # Multiple (8/2 = 4)
-      if(Math.sqrt(m) % 1 == 0)  # Is m a square?
-        gotOne = true
-        puts "Composite:\t#{n} = #{f} + 2x#{Math.sqrt(m).to_i}^2"#
-        break
-      end
-    end
-    if !gotOne
-      puts "\n\nComposite:#{n} is NOT A FIT"
-      break
+while(notFound)
+  result = result + 2
+  next if result.isPrime?
+  # Get primes less than result
+  # For each of them, see if the difference is twice a square
+  # If any are a fit, then notFound is back to true
+  notFound = false
+  primeList.select{|v| v<result}.each do |p|
+    diff = result - p
+    #puts "Trying: #{result} = #{p}+#{diff}"
+    if (isTwiceSquare(diff))
+      notFound = true
+      break # Don't need to keep testing others if we've found one
     end
   end
 end
 
+puts result
