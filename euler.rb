@@ -23,12 +23,6 @@ class Array
       result * i
     end
   end
-  def permutations # returns an array of permutations of the array; recursive.
-    return [self] if size < 2
-    perm = []
-    each {|e| (self - [e]).permutations.each {|p| perm << ([e] + p) } }
-    perm
-  end
   def isPrime? # returns true if all elements of array, as Integers, are prime
     p = true
     self.each do |n|

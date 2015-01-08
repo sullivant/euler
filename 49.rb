@@ -12,4 +12,26 @@ require_relative('euler')
 include Math
 require 'prime'
 
+1001.upto(9999).each do |s|
+next unless s.isPrime?
+#puts "**CHECKING: #{s}**"
+primes = []
 
+# needs to be non-distinct
+s.digits.permutation.each do |p|
+  n = p.join().to_i
+  primes << n if n.isPrime?
+end
+
+primes.uniq.sort!.each_with_index do |p,i|
+  diffFirst = p-primes[0]
+  # If our diff from first is also in this array, check for another one.
+  hit = primes.include?(p+diffFirst)
+  if (hit && diffFirst > 0)
+    f = p+diffFirst
+    #puts "p:#{p} dFirst:#{diffFirst} inc:#{hit} (#{f})"
+    puts "\tTRY: #{s}+#{p}+#{f} (diffs: #{diffFirst})"
+  end
+end
+
+end
