@@ -4,6 +4,16 @@ class Euler
 end 
 
 class Array
+  def choose_recs(c)
+    # Returns subset arrays of size c from array self, starting from position
+    # self[0].
+    r = []
+    0.upto (self.length-c) do |s|
+        e = (s+c-1)
+        r << self[s..e]
+    end 
+    return r
+  end
   def max_index(n)
     index = 0
     if self.last > n

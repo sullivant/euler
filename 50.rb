@@ -12,3 +12,18 @@ require_relative('euler')
 include Math
 require 'prime'
 
+p = Prime.first 1000
+limit = 1000000
+res = []
+50.upto(limit) do |s|
+  p.choose_recs(s).each do |r|
+    sum = r.sum
+    next if sum > limit
+    next unless sum.isPrime?
+    res << ["#{s} : #{sum}"]
+  end
+end
+
+res.each do |l|
+  puts l
+end
