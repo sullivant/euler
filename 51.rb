@@ -15,3 +15,16 @@ require_relative('euler')
 include Math
 require 'prime'
 
+# Shooting for a 6 digit number, to start.
+# Total number of possible primes to consider: 68906
+
+# Generate a list of primes, six digits long, test for multiple digits, where
+# only 3 are replicated.  These are our starting points to test for families.
+
+# Test for 3 replicated digits by the count of unique digits being 4.
+# eg: 123444
+
+100000.upto(999999) do |n|
+  next unless n.isPrime?
+  puts n
+end

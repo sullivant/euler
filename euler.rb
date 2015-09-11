@@ -182,4 +182,7 @@ class Integer
   def factorial
     (2..self).inject(1) { |f, n| f * n }
   end
+  def digitSum
+    self.digits.sum
+  end
 end
