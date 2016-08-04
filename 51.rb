@@ -1,14 +1,14 @@
-# By replacing the 1st digit of the 2-digit number *3, it turns out that six of 
+# By replacing the 1st digit of the 2-digit number *3, it turns out that six of
 # the nine possible values: 13, 23, 43, 53, 73, and 83, are all prime.
 
-# By replacing the 3rd and 4th digits of 56**3 with the same digit, this 5-digit 
-# number is the first example having seven primes among the ten generated 
-# numbers, yielding the family: 56003, 56113, 56333, 56443, 56663, 56773, 
-# and 56993. Consequently 56003, being the first member of this family, is the 
+# By replacing the 3rd and 4th digits of 56**3 with the same digit, this 5-digit
+# number is the first example having seven primes among the ten generated
+# numbers, yielding the family: 56003, 56113, 56333, 56443, 56663, 56773,
+# and 56993. Consequently 56003, being the first member of this family, is the
 # smallest prime with this property.
 
-# Find the smallest prime which, by replacing part of the number (not 
-# necessarily adjacent digits) with the same digit, is part of an eight prime 
+# Find the smallest prime which, by replacing part of the number (not
+# necessarily adjacent digits) with the same digit, is part of an eight prime
 # value family.
 
 require_relative('euler')
@@ -21,10 +21,11 @@ require 'prime'
 # Generate a list of primes, six digits long, test for multiple digits, where
 # only 3 are replicated.  These are our starting points to test for families.
 
-# Test for 3 replicated digits by the count of unique digits being 4.
-# eg: 123444
-
+# Test for 3 replicated digits by the count how many times a digit appears in
+# a number when split by digit.
 100000.upto(999999) do |n|
   next unless n.isPrime?
   puts n
+
+  
 end
