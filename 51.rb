@@ -15,17 +15,28 @@ require_relative('euler')
 include Math
 require 'prime'
 
-# Shooting for a 6 digit number, to start.
-# Total number of possible primes to consider: 68906
+primeList = []
+families = []
 
-# Generate a list of primes, six digits long, test for multiple digits, where
-# only 3 are replicated.  These are our starting points to test for families.
-
-# Test for 3 replicated digits by the count how many times a digit appears in
-# a number when split by digit.
-100000.upto(999999) do |n|
-  next unless n.isPrime?
-  puts n
-
-  
+def getFamily(n)
+    # First two and last digit and digits replaced
+    return n[0..1] << n[-1,1]
 end
+
+50000.upto 59999 do |n|
+    next unless n.isPrime?
+    primeList << n
+end
+
+# Find numbers with two 1's that aren't in the first or last position
+primeList.each do |p|
+    n = 6
+    next unless p.to_s.scan(/(?<!^)#{n}(?!$)/).count > 1
+    puts "p: #{p}" 
+
+    positions = p.to_s.enum_for(:scan,/(?<!^)#{n}(?!$)/).map {
+        Regexp.last_match.begin(0)
+    }
+    puts positions.join("|")
+end
+
