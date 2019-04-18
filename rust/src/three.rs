@@ -4,6 +4,7 @@ use super::shared;
 
 pub fn run() {
     println!("Running problem 3");
-
-    shared::prime_factors(10);
+    
+    let x: Vec<u64> = shared::prime_factors(600851475143);
+    println!("{:?}",x);
 }
