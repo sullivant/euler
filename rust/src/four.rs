@@ -8,12 +8,13 @@ use super::shared;
 
 pub fn run() {
     println!("Running problem 4");
-}
 
-fn is_palindrome(p: i32) -> bool {
-    let v: Vec<u8> = p.to_string().into_bytes();
-    let mut vr: Vec<u8> = v.clone();
-    vr.reverse();
-
-    return vr == v;
+    for l in (100..999).rev() {
+        for r in (100..999).rev() {
+            let b: bool = shared::is_palindrome(l * r);
+            if b {
+                println!("Got Palindrome: {} ( {} * {} )", l * r, l, r);
+            }
+        }
+    }
 }

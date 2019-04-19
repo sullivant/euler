@@ -17,12 +17,11 @@ pub fn prime_factors(n: u64) -> Vec<u64> {
     return factors;
 }
 
-// Returns a vector of the divisors of a supplied number
-pub fn divisors(n: f32) {
-    //let mut divs: Vec<u64> = Vec::new();
+// Returns true if a number is a palindrome (eg: 12321)
+pub fn is_palindrome(p: i32) -> bool {
+    let v: Vec<u8> = p.to_string().into_bytes();
+    let mut vr: Vec<u8> = v.clone();
+    vr.reverse();
 
-    let f: f32 = n.sqrt().floor();
-    println!("{}", f);
-
-    //for i in 2..f {}
+    return vr == v;
 }
