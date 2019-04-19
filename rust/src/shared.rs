@@ -25,3 +25,12 @@ pub fn is_palindrome(p: i32) -> bool {
 
     return vr == v;
 }
+
+// Returns a vector containing the factors of a number
+// (source: https://gist.github.com/qolop/71ef78c394db822756d58cac9993db77 )
+pub fn get_factors(n: u64) -> Vec<u64> {
+    (1..n + 1)
+        .into_iter()
+        .filter(|&x| n % x == 0)
+        .collect::<Vec<u64>>()
+}
