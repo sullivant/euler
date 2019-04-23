@@ -1,5 +1,9 @@
 // Shared functions that many problems may use or need
 
+use std::fs::File;
+use std::io;
+use std::io::{BufRead, BufReader, Error, ErrorKind};
+
 // Returns a vector containing the prime factors of a supplied number
 pub fn prime_factors(n: u64) -> Vec<u64> {
     println!("Getting pf for {}", n);
@@ -33,4 +37,57 @@ pub fn get_factors(n: u64) -> Vec<u64> {
         .into_iter()
         .filter(|&x| n % x == 0)
         .collect::<Vec<u64>>()
+}
+
+// Returns true or false if this number is prime
+pub fn is_prime(n: u64) -> bool {
+    println!("Checking: {}", n);
+
+    // Gather the sum of the digits
+    let digits: Vec<_> = n
+        .to_string()
+        .chars()
+        .map(|d| d.to_digit(10).unwrap())
+        .collect();
+    let s: u32 = digits.iter().sum();
+
+    // Check for some common things that make a number NOT prime
+    if n < 1 {
+        return false;
+    }
+    if n < 3 {
+        return true;
+    }
+    if s % 3 == 0 {
+        return false;
+    }
+    if s % 9 == 0 {
+        return false;
+    }
+
+    // Check the longer way.
+    let upper_limit: u64 = (n as f64).sqrt().ceil() as u64;
+    for i in 2..upper_limit + 1 {
+        if n % i == 0 {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+fn read(path: &str) -> Result<Vec<u64>, io::Error> {
+    //TODO: Read only the last line of the file.
+    let file = File::open(path)?;
+    let br = BufReader::new(file);
+    let mut v = Vec::new();
+    for line in br.lines() {
+        let line = line?;
+        let n = line
+            .trim()
+            .parse()
+            .map_err(|e| Error::new(ErrorKind::InvalidData, e))?;
+        v.push(n);
+    }
+    Ok(v)
 }
