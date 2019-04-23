@@ -2,9 +2,9 @@
 #[allow(dead_code)]
 mod shared; // Shared functions that many problems may want to use
 
-mod five;
+mod six;
 
 // Run the problem
 fn main() {
-    five::run();
+    six::run();
 }
