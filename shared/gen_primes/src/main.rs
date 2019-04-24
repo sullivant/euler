@@ -3,6 +3,16 @@
 // This simply generates the primes that come after what's already
 // stored in a shared text file.
 //
+// It generates them by checking that the supplied number is prime first,
+// then walks up the next 1,000,000 numbers, checking each for primality
+// and if prime adds them to a vector.  
+//
+// At the end, it prints that vector of primes to a tmp file for review
+// to be appended to file_path if approved
+// 
+// It could probably be written to just append them to file_path, but
+// I wanted to "baby step" this process.
+//
 
 use std::env;
 use std::error::Error;
@@ -14,7 +24,7 @@ use std::process;
 pub fn main() {
     let args: Vec<String> = env::args().collect();
     let n: u64 = args[1].parse().unwrap();
-    let upper_limit: u64 = 10;
+    let upper_limit: u64 = 1000000;
 
     // If supplied N is not prime, lets bail and check on why
     if !is_prime(n) { println!("{} is not prime. check on that.", n); return;}
@@ -43,7 +53,7 @@ pub fn main() {
 
 // Returns true or false if this number is prime
 pub fn is_prime(n: u64) -> bool {
-    //println!("Checking: {}", n);
+    if n % 100001 == 0 { println!("Checking: {}", n); }
 
     // Gather the sum of the digits
     let digits: Vec<_> = n
@@ -80,7 +90,6 @@ pub fn is_prime(n: u64) -> bool {
 
 
 fn write_primes(nums: Vec<u64>) -> Result<(), Box<Error>> {
-    //let nums = vec![1.0, 3.14, 5.1, 10.6, 42.424242];
     let strings: Vec<String> = nums.iter().map(|n| n.to_string()).collect();
 
     let mut file = File::create("/tmp/new_primes")?;
