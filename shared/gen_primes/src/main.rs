@@ -35,6 +35,7 @@ pub fn main() {
             eprintln!("{}", err);
             process::exit(1);
         }
+        println!("Wrote to /tmp/new_primes for review.");
     } else {
         println!("No primes found.");
     }
@@ -82,8 +83,8 @@ fn write_primes(nums: Vec<u64>) -> Result<(), Box<Error>> {
     //let nums = vec![1.0, 3.14, 5.1, 10.6, 42.424242];
     let strings: Vec<String> = nums.iter().map(|n| n.to_string()).collect();
 
-    let mut file = File::create("/tmp/foobar")?;
-    writeln!(file, "{}", strings.join(", "))?;
+    let mut file = File::create("/tmp/new_primes")?;
+    writeln!(file, "{}", strings.join("\n"))?;
     Ok(())
 }
 
