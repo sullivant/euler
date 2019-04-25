@@ -40,8 +40,18 @@ pub fn run() {
         &big_number[987..1000]
     );
 
-    let text = &big_number[987..1000].to_string();
-    let v: Vec<u32> = text.chars().flat_map(|ch| ch.to_digit(10)).collect();
-    let prod = v.iter().fold(1, |prod, x| prod * x);
-    println!("{}", prod);
+    let mut greatest: u64 = 0u64;
+
+    for i in 0..988 {
+        let text = &big_number[i..(i + slice_size)].to_string();
+        let v: Vec<u64> = text
+            .chars()
+            .flat_map(|ch| ch.to_digit(10).map(u64::from))
+            .collect();
+        let prod = v.iter().fold(1, |prod, x| prod * x);
+        if prod > greatest {
+            greatest = prod;
+        }
+    }
+    println!("greatest product found: {}", greatest);
 }
