@@ -76,8 +76,9 @@ pub fn is_prime(n: u64) -> bool {
     return true;
 }
 
+// Reads a file into a vector; useful for a list of numbers.
+// See also: shared/primes.txt
 fn read(path: &str) -> Result<Vec<u64>, io::Error> {
-    //TODO: Read only the last line of the file.
     let file = File::open(path)?;
     let br = BufReader::new(file);
     let mut v = Vec::new();
