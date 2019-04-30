@@ -42,13 +42,20 @@ pub fn run() {
 
     let mut greatest: u64 = 0u64;
 
+    // Because we know where our last slice will start, we only need to count up to that number
     for i in 0..988 {
         let text = &big_number[i..(i + slice_size)].to_string();
+
+        // Create a vector of the values contained in the slice (string)
         let v: Vec<u64> = text
             .chars()
             .flat_map(|ch| ch.to_digit(10).map(u64::from))
             .collect();
+
+        // Iterate over them, creating a product
         let prod = v.iter().fold(1, |prod, x| prod * x);
+
+        // If we hit a new max, save it
         if prod > greatest {
             greatest = prod;
         }
