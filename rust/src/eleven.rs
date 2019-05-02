@@ -32,7 +32,7 @@ pub fn run() {
 
     // let's start by making a vector of vectors.
 
-    let _v: Vec<Vec<i32>> = get_vec();
+    let v: Vec<Vec<i32>> = get_vec();
 
     //    let res = match divide(2.0, 0.0) {
     //        Some(x) => x,
@@ -40,26 +40,39 @@ pub fn run() {
     //   };
     //   println!("{}", res);
 
-    let row: Vec<i32> = match _v.get(0) {
+    let row: Vec<i32> = match v.get(0) {
         Some(r) => r.to_vec(),
         None => [0, 0, 0, 0].to_vec(),
     };
-
-    let east: Vec<i32> = match row.get(0..4) {
-        Some(e) => e.to_vec(),
-        None => [0, 0, 0, 0].to_vec(),
-    };
     println!("{:?}", row);
-    println!("{:?}", east);
+
+    println!("{:?}", get_east(0, 4, &v));
+    println!("{:?}", get_west(0, 4, &v));
 }
 
-//fn divide(numerator: f64, denominator: f64) -> Option<f64> {
-//    if denominator == 0.0 {
-//      None
-//  } else {
-//    Some(numerator / denominator)
-// }
-//}
+pub fn get_east(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
+    match v.get(r) {
+        None => [0, 0, 0, 0].to_vec(),
+        Some(r) => match r.get(c..c + 4) {
+            None => [0, 0, 0, 0].to_vec(),
+            Some(e) => e.to_vec(),
+        },
+    }
+}
+
+pub fn get_west(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
+    if c < 4 {
+        return [0, 0, 0, 0].to_vec();
+    }
+
+    match v.get(r) {
+        None => [0, 0, 0, 0].to_vec(),
+        Some(r) => match r.get(c - 3..c + 1) {
+            None => [0, 0, 0, 0].to_vec(),
+            Some(e) => e.to_vec(),
+        },
+    }
+}
 
 pub fn get_vec() -> (Vec<Vec<i32>>) {
     let mut v: Vec<Vec<i32>> = Vec::new();
