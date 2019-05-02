@@ -52,10 +52,10 @@ pub fn run() {
         Some(r) => r.to_vec(),
         None => [0, 0, 0, 0].to_vec(),
     };
-    println!("{:?}", row);
-
-    println!("{:?}", get_east(0, 4, &v));
-    println!("{:?}", get_west(0, 4, &v));
+    println!("r: {:?}", row);
+    println!("e: {:?}", get_east(0, 4, &v));
+    println!("w: {:?}", get_west(0, 4, &v));
+    println!("s: {:?}", get_south(0, 0, &v));
 }
 
 // Returns a vector containing the values (r,c) to (r,c+4) or returns 0
@@ -87,7 +87,18 @@ pub fn get_west(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
 }
 
 //pub fn get_north(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {}
-//pub fn get_south(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {}
+
+pub fn get_south(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
+    let rows = v.get(0..r + 4);
+    match rows {
+        None => {
+            return [0, 0, 0, 0].to_vec();
+        }
+        Some(_) => {}
+    }
+
+    return [1, 1, 1, 1].to_vec();
+}
 
 // Just returns a giant vector of vectors that contains our working dataset/frame.
 pub fn get_vec() -> (Vec<Vec<i32>>) {
