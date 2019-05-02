@@ -26,6 +26,14 @@
 // 01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48
 //
 //
+// Plan:
+// I think this can be tackled by treating this matrix of numbers as cells that are
+// "walkable" like a game - I want to do some boundary some/none checking examples
+// anyway; it's a good time to learn that.  So, if I treat this like it's available
+// moves on a board, I might be able to have functions like get_east, get_north, etc.
+// and if the move is invalid, it can return a vector of zeros, which will multiply
+// to zero anyway.
+//
 
 pub fn run() {
     println!("Running problem 11.");
@@ -50,6 +58,8 @@ pub fn run() {
     println!("{:?}", get_west(0, 4, &v));
 }
 
+// Returns a vector containing the values (r,c) to (r,c+4) or returns 0
+// if the move is invalid
 pub fn get_east(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
     match v.get(r) {
         None => [0, 0, 0, 0].to_vec(),
@@ -60,6 +70,8 @@ pub fn get_east(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
     }
 }
 
+// Returns a vector containing the values (r,c) to (r,c-4) or returns 0
+// if the move is invalid
 pub fn get_west(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
     if c < 4 {
         return [0, 0, 0, 0].to_vec();
@@ -74,6 +86,10 @@ pub fn get_west(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
     }
 }
 
+//pub fn get_north(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {}
+//pub fn get_south(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {}
+
+// Just returns a giant vector of vectors that contains our working dataset/frame.
 pub fn get_vec() -> (Vec<Vec<i32>>) {
     let mut v: Vec<Vec<i32>> = Vec::new();
     v.push(
