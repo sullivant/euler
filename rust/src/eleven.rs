@@ -38,24 +38,49 @@
 pub fn run() {
     println!("Running problem 11.");
 
-    // let's start by making a vector of vectors.
-
     let v: Vec<Vec<i32>> = get_vec();
 
-    //    let res = match divide(2.0, 0.0) {
-    //        Some(x) => x,
-    //        None => 0.0,
-    //   };
-    //   println!("{}", res);
+    let mut product: u32 = 0;
 
-    let row: Vec<i32> = match v.get(0) {
-        Some(r) => r.to_vec(),
-        None => [0, 0, 0, 0].to_vec(),
-    };
-    println!("r: {:?}", row);
-    println!("e: {:?}", get_east(0, 0, &v));
-    println!("w: {:?}", get_west(0, 0, &v));
-    println!("s: {:?}", get_south(16, 0, &v));
+    for r in 0..20 {
+        for c in 0..20 {
+            println!("({},{})", r, c);
+            let e: Vec<i32> = get_east(r, c, &v);
+            let pe: u32 = e.iter().fold(1, |a, &b| a * b as u32);
+
+            let w: Vec<i32> = get_west(r, c, &v);
+            let pw: u32 = w.iter().fold(1, |a, &b| a * b as u32);
+
+            let n: Vec<i32> = get_north(r, c, &v);
+            let pn: u32 = n.iter().fold(1, |a, &b| a * b as u32);
+
+            let s: Vec<i32> = get_south(r, c, &v);
+            let ps: u32 = s.iter().fold(1, |a, &b| a * b as u32);
+
+            //TODO: NE, NW, SE, SW
+
+            println!("e: {:?} = {}", e, pe);
+            println!("w: {:?} = {}", w, pw);
+            println!("s: {:?} = {}", s, ps);
+            println!("n: {:?} = {}", n, pn);
+
+            // Determine if we have a new max product
+            if pe > product {
+                product = pe;
+            }
+            if pw > product {
+                product = pw;
+            }
+            if ps > product {
+                product = ps;
+            }
+            if pn > product {
+                product = pn;
+            }
+        }
+    }
+
+    println!("Max Product: {}", product);
 }
 
 // Returns a vector containing the values (r,c) to (r,c+4) or returns 0
@@ -86,7 +111,31 @@ pub fn get_west(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
     }
 }
 
-//pub fn get_north(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {}
+pub fn get_north(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
+    if r < 4 {
+        return [0, 0, 0, 0].to_vec();
+    }
+
+    let mut return_vec: Vec<i32> = Vec::new();
+
+    let rows = match v.get(r - 3..r + 1) {
+        None => {
+            return [0, 0, 0, 0].to_vec();
+        }
+        Some(rows) => rows,
+    };
+
+    // rows here is all 4 of our north rows.
+    for i in 0..4 {
+        let n: i32 = match rows[i].get(c) {
+            None => 0,
+            Some(c) => *c,
+        };
+        return_vec.push(n);
+    }
+
+    return return_vec;
+}
 
 pub fn get_south(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
     let mut return_vec: Vec<i32> = Vec::new();
