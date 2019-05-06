@@ -40,52 +40,28 @@ pub fn run() {
 
     let v: Vec<Vec<i32>> = get_vec();
 
-    let mut product: u32 = 0;
+    let mut product: Vec<u32> = Vec::new();
 
     for r in 0..20 {
         for c in 0..20 {
-            println!("({},{})", r, c);
-            let e: Vec<i32> = get_east(r, c, &v);
-            let pe: u32 = e.iter().fold(1, |a, &b| a * b as u32);
-
-            let w: Vec<i32> = get_west(r, c, &v);
-            let pw: u32 = w.iter().fold(1, |a, &b| a * b as u32);
-
-            let n: Vec<i32> = get_north(r, c, &v);
-            let pn: u32 = n.iter().fold(1, |a, &b| a * b as u32);
-
-            let s: Vec<i32> = get_south(r, c, &v);
-            let ps: u32 = s.iter().fold(1, |a, &b| a * b as u32);
-
-            //TODO: NE, NW, SE, SW
-
-            println!("e: {:?} = {}", e, pe);
-            println!("w: {:?} = {}", w, pw);
-            println!("s: {:?} = {}", s, ps);
-            println!("n: {:?} = {}", n, pn);
-
-            // Determine if we have a new max product
-            if pe > product {
-                product = pe;
-            }
-            if pw > product {
-                product = pw;
-            }
-            if ps > product {
-                product = ps;
-            }
-            if pn > product {
-                product = pn;
-            }
+            println!("{},{}", r, c);
+            product.push(get_n(r, c, &v).iter().fold(1, |a, &b| a * b as u32));
+            product.push(get_e(r, c, &v).iter().fold(1, |a, &b| a * b as u32));
+            product.push(get_s(r, c, &v).iter().fold(1, |a, &b| a * b as u32));
+            product.push(get_w(r, c, &v).iter().fold(1, |a, &b| a * b as u32));
+            product.push(get_ne(r, c, &v).iter().fold(1, |a, &b| a * b as u32));
+            product.push(get_se(r, c, &v).iter().fold(1, |a, &b| a * b as u32));
+            product.push(get_nw(r, c, &v).iter().fold(1, |a, &b| a * b as u32));
+            product.push(get_sw(r, c, &v).iter().fold(1, |a, &b| a * b as u32));
         }
     }
-
-    println!("Max Product: {}", product);
+    product.sort();
+    println!("Product: {:?}", product.last());
 }
 
 // Returns a vector containing the values (r,c) to (r,c+4) or returns 0
 // if the move is invalid
-pub fn get_east(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
+pub fn get_e(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
     match v.get(r) {
         None => [0, 0, 0, 0].to_vec(),
         Some(r) => match r.get(c..c + 4) {
@@ -95,9 +71,69 @@ pub fn get_east(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
     }
 }
 
+pub fn get_ne(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
+    let mut coords: Vec<Vec<usize>> = Vec::new();
+
+    // Safety check
+    if r < 3 || c > 16 {
+        return [0, 0, 0, 0].to_vec();
+    }
+
+    // Walk in a NE direction
+    for a in 0..4 {
+        coords.push([r - a, c + a].to_vec());
+    }
+    return get_data(&coords, v);
+}
+
+pub fn get_nw(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
+    let mut coords: Vec<Vec<usize>> = Vec::new();
+
+    // Safety check
+    if r < 3 || c < 3 {
+        return [0, 0, 0, 0].to_vec();
+    }
+
+    // Walk in a NW direction
+    for a in 0..4 {
+        coords.push([r - a, c - a].to_vec());
+    }
+    return get_data(&coords, v);
+}
+
+pub fn get_se(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
+    let mut coords: Vec<Vec<usize>> = Vec::new();
+
+    // Safety check
+    if r > 16 || c > 16 {
+        return [0, 0, 0, 0].to_vec();
+    }
+
+    // Walk in a SE direction
+    for a in 0..4 {
+        coords.push([r + a, c + a].to_vec());
+    }
+    return get_data(&coords, v);
+}
+
+pub fn get_sw(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
+    let mut coords: Vec<Vec<usize>> = Vec::new();
+
+    // Safety check
+    if r > 16 || c < 3 {
+        return [0, 0, 0, 0].to_vec();
+    }
+
+    // Walk in a SW direction
+    for a in 0..4 {
+        coords.push([r + a, c - a].to_vec());
+    }
+    return get_data(&coords, v);
+}
+
 // Returns a vector containing the values (r,c) to (r,c-4) or returns 0
 // if the move is invalid
-pub fn get_west(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
+pub fn get_w(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
     if c < 4 {
         return [0, 0, 0, 0].to_vec();
     }
@@ -111,7 +147,7 @@ pub fn get_west(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
     }
 }
 
-pub fn get_north(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
+pub fn get_n(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
     if r < 4 {
         return [0, 0, 0, 0].to_vec();
     }
@@ -137,7 +173,7 @@ pub fn get_north(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
     return return_vec;
 }
 
-pub fn get_south(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
+pub fn get_s(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
     let mut return_vec: Vec<i32> = Vec::new();
 
     let rows = match v.get(r..r + 4) {
@@ -158,6 +194,31 @@ pub fn get_south(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
     }
 
     return return_vec;
+}
+
+// Takes a supplied vector of positions and returns that data found
+// at those positions, or a default [0,0,0,0] vector if unable to get
+// the data
+pub fn get_data(coords: &Vec<Vec<usize>>, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
+    let mut data: Vec<i32> = Vec::new();
+
+    for coord in coords {
+        let row = match v.get(coord[0]) {
+            None => {
+                return [0, 0, 0, 0].to_vec();
+            }
+            Some(row) => row,
+        };
+        let val = match row.get(coord[1]) {
+            None => {
+                return [0, 0, 0, 0].to_vec();
+            }
+            Some(val) => *val,
+        };
+        data.push(val);
+    }
+
+    return data;
 }
 
 // Just returns a giant vector of vectors that contains our working dataset/frame.
