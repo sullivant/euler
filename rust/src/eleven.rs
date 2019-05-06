@@ -39,7 +39,6 @@ pub fn run() {
     println!("Running problem 11.");
 
     let v: Vec<Vec<i32>> = get_vec();
-
     let mut product: Vec<u32> = Vec::new();
 
     for r in 0..20 {
