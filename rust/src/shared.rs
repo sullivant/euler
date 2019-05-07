@@ -33,10 +33,12 @@ pub fn is_palindrome(p: i32) -> bool {
 // Returns a vector containing the factors of a number
 // (source: https://gist.github.com/qolop/71ef78c394db822756d58cac9993db77 )
 pub fn get_factors(n: u64) -> Vec<u64> {
-    (1..n + 1)
+    let mut f: Vec<u64> = (1..(n / 2) + 1)
         .into_iter()
         .filter(|&x| n % x == 0)
-        .collect::<Vec<u64>>()
+        .collect::<Vec<u64>>();
+    f.push(n);
+    return f;
 }
 
 // Returns true or false if this number is prime

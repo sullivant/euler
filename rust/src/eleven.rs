@@ -43,7 +43,6 @@ pub fn run() {
 
     for r in 0..20 {
         for c in 0..20 {
-            println!("{},{}", r, c);
             product.push(get_n(r, c, &v).iter().fold(1, |a, &b| a * b as u32));
             product.push(get_e(r, c, &v).iter().fold(1, |a, &b| a * b as u32));
             product.push(get_s(r, c, &v).iter().fold(1, |a, &b| a * b as u32));
@@ -58,7 +57,8 @@ pub fn run() {
     println!("Product: {:?}", product.last());
 }
 
-// Returns a vector containing the values (r,c) to (r,c+4) or returns 0
+// Functions below for the directions:
+// Return a vector containing the values (r,c) to (r,c+4) or returns 0
 // if the move is invalid
 pub fn get_e(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
     match v.get(r) {
@@ -130,8 +130,6 @@ pub fn get_sw(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
     return get_data(&coords, v);
 }
 
-// Returns a vector containing the values (r,c) to (r,c-4) or returns 0
-// if the move is invalid
 pub fn get_w(r: usize, c: usize, v: &Vec<Vec<i32>>) -> (Vec<i32>) {
     if c < 4 {
         return [0, 0, 0, 0].to_vec();
