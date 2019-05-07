@@ -12,17 +12,18 @@ use super::shared;
 pub fn run() {
     println!("Running problem 12.");
 
-    let mut triangle: u64 = 0;
-    for n in 1..100001 {
-        triangle += n;
-        let factors: Vec<u64> = shared::get_factors(triangle);
+    println!("{}", shared::count_factors(76576500));
 
+    let mut triangle: u64 = 0;
+    for n in 1..10000000001 {
+        triangle += n;
         if n % 500 == 0 {
             println!("Hit {}", n);
         }
 
-        if factors.len() > 500 {
-            println!("t:{} = ({})", triangle, factors.len());
+        let f: u64 = shared::count_factors(triangle);
+        if f > 500 {
+            println!("triangle:{} = ({})", triangle, f);
             break;
         }
     }
