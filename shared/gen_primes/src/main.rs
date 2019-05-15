@@ -33,9 +33,6 @@ pub fn main() {
 
     println!("Generating primes after known value: {}", n);
 
-    let file_path: String = String::from("/mnt/d/sandbox/euler/shared/primes.txt");
-    println!("File Path: {}", file_path);
-
     let mut prime_vec: Vec<u64> = Vec::new();
     for i in ((n + 2)..(n + upper_limit)).step_by(2) {
         if is_prime(i) {
