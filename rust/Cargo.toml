@@ -5,5 +5,5 @@ authors = ["Thomas Sullivan <thomas.l.sullivan@vumc.org>"]
 edition = "2018"
 
 [dependencies]
-#bigint = "4.4.1"
+bigint = "4.4.1"
 
