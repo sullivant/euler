@@ -17,10 +17,9 @@
 
 // Lets calculat this via Rust, anyway.
 
-extern crate num_bigint as bigint;
-use bigint::BigInt;
-use bigint::ToBigInt;
+extern crate num_bigint;
 use factorial::Factorial;
+use num_bigint::{BigInt, ToBigInt};
 
 pub fn run() {
     println!("Running problem 15.");
