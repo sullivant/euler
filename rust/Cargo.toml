@@ -6,4 +6,4 @@ edition = "2018"
 
 [dependencies]
 bigint = "4.4.1"
-
+factorial = "0.1.1"
