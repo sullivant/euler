@@ -17,8 +17,9 @@
 
 // Lets calculat this via Rust, anyway.
 
-extern crate bigint;
-use bigint::U256;
+extern crate num_bigint as bigint;
+use bigint::BigInt;
+use bigint::ToBigInt;
 use factorial::Factorial;
 
 pub fn run() {
@@ -30,10 +31,13 @@ pub fn run() {
     let n: u64 = sides * 2;
     let r: u64 = sides;
 
+    let mut a: BigInt = BigInt::from(n);
+    a = a.factorial();
+
     println!(
         "C({},{}) = {}",
         n,
         r,
-        (n.factorial() / (r.factorial() * (n - r).factorial()))
+        a //(n.factorial() / (r.factorial() * (n - r).factorial()))
     );
 }
