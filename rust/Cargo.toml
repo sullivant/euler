@@ -5,4 +5,5 @@ authors = ["Thomas Sullivan <thomas.l.sullivan@vumc.org>"]
 edition = "2018"
 
 [dependencies]
+num-traits = "0.2.8"
 num = "0.2.0"
