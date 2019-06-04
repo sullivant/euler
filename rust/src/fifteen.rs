@@ -17,9 +17,18 @@
 
 // Lets calculat this via Rust, anyway.
 
-extern crate num_bigint;
-use factorial::Factorial;
-use num_bigint::{BigInt, ToBigInt};
+extern crate num;
+use num::BigUint;
+
+fn factorial(n: usize) -> BigUint {
+    fn factorial(n: usize, result: BigUint) -> BigUint {
+        match n {
+            0 | 1 => result,
+            n => factorial(n - 1, result * n),
+        }
+    }
+    factorial(n, 1_u32.into())
+}
 
 pub fn run() {
     println!("Running problem 15.");
@@ -29,14 +38,11 @@ pub fn run() {
 
     let n: u64 = sides * 2;
     let r: u64 = sides;
+    let nr: u64 = n - r;
 
-    let mut a: BigInt = BigInt::from(n);
-    a = a.factorial();
+    let nf: BigUint = factorial(n as usize);
+    let rf: BigUint = factorial(r as usize);
+    let nrf: BigUint = factorial(nr as usize);
 
-    println!(
-        "C({},{}) = {}",
-        n,
-        r,
-        a //(n.factorial() / (r.factorial() * (n - r).factorial()))
-    );
+    println!("C({},{}) = {}", n, r, (nf / (rf * nrf)));
 }
