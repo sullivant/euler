@@ -1,10 +1,10 @@
 // Project Euler
 
-mod seventeen;
 #[allow(dead_code)]
-mod shared; // Shared functions that many problems may want to use
+mod shared;
+mod sixtyseven; // Shared functions that many problems may want to use
 
 // Run the problem
 fn main() {
-    seventeen::run();
+    sixtyseven::run();
 }
