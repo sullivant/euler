@@ -6,8 +6,6 @@
 // answer see shared/primes.txt and check the value on line 10,001.
 //
 
-use super::shared;
-
 pub fn run() {
     println!("Running problem 7.");
 }

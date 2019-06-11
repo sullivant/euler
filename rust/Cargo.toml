@@ -4,7 +4,12 @@ version = "0.1.0"
 authors = ["Thomas Sullivan <thomas.l.sullivan@vumc.org>"]
 edition = "2018"
 
+[lib]
+name = "problems"
+path = "src/lib.rs"
+
 [dependencies]
+bigint = "4.4.1"
 num-traits = "0.2.8"
 num = "0.2.0"
 numbers = "0.1.2"
