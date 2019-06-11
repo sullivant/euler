@@ -2,6 +2,7 @@
 use std::fs::File;
 use std::io;
 use std::io::{BufRead, BufReader, Error, ErrorKind};
+
 // Returns a vector containing the prime factors of a supplied number
 pub fn prime_factors(n: u64) -> Vec<u64> {
     //println!("Getting pf for {}", n);

@@ -9,6 +9,7 @@ name = "problems"
 path = "src/lib.rs"
 
 [dependencies]
+csv = "1.0.7"
 bigint = "4.4.1"
 num-traits = "0.2.8"
 num = "0.2.0"
