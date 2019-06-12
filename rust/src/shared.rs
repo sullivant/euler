@@ -89,6 +89,8 @@ pub fn is_prime(n: u64) -> bool {
     return true;
 }
 
+// Loads a passed file path into a vector of vector<u32> values.  
+// worked well for problems 18 and 67.
 pub fn read_vector(file: &str) -> Result<Vec<Vec<u32>>, Box<dyn Error>> {
     let file_path = String::from(file);
     let file = File::open(file_path)?;
