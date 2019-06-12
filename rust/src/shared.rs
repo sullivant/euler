@@ -1,7 +1,6 @@
 // Shared functions that many problems may use or need
+use std::error::Error;
 use std::fs::File;
-use std::io;
-use std::io::{BufRead, BufReader, Error, ErrorKind};
 
 // Returns a vector containing the prime factors of a supplied number
 pub fn prime_factors(n: u64) -> Vec<u64> {
@@ -90,19 +89,36 @@ pub fn is_prime(n: u64) -> bool {
     return true;
 }
 
-// Reads a file into a vector; useful for a list of numbers.
-// See also: shared/primes.txt
-fn read(path: &str) -> Result<Vec<u64>, io::Error> {
-    let file = File::open(path)?;
-    let br = BufReader::new(file);
-    let mut v = Vec::new();
-    for line in br.lines() {
-        let line = line?;
-        let n = line
-            .trim()
-            .parse()
-            .map_err(|e| Error::new(ErrorKind::InvalidData, e))?;
-        v.push(n);
+pub fn read_vector(file: &str) -> Result<Vec<Vec<u32>>, Box<dyn Error>> {
+    let file_path = String::from(file);
+    let file = File::open(file_path)?;
+    let mut rdr = csv::ReaderBuilder::new()
+        .has_headers(false)
+        .delimiter(b' ')
+        .flexible(true)
+        .from_reader(file);
+
+    // A vector of Vec<u32> records, which represents the data
+    // in the source file as integer values
+    let mut file_records: Vec<Vec<u32>> = Vec::new();
+
+    // For each of the CSV reader records, lets parse it into the
+    // proper data structure
+    for result in rdr.records() {
+        let record = result?;
+
+        // A vector of u32 to represent this CSV file's row
+        let mut rec_vec: Vec<u32> = Vec::new();
+        for field in record.iter() {
+            let val: u32 = field.parse().unwrap_or(0);
+            rec_vec.push(val);
+        }
+
+        // Push it onto the master file's Vector of Vec<u32>s
+        file_records.push(rec_vec);
     }
-    Ok(v)
+
+    // Return OK with the rows
+    Ok(file_records)
 }
+

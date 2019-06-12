@@ -7,47 +7,12 @@
 //
 // Comments are mine as I work through groking all of it
 
+use super::shared;
 use std::cmp::max;
 
-extern crate csv;
-use std::error::Error;
-use std::fs::File;
-
-fn process_file() -> Result<Vec<Vec<u32>>, Box<dyn Error>> {
-    let file_path = String::from("../shared/18.txt");
-    let file = File::open(file_path)?;
-    let mut rdr = csv::ReaderBuilder::new()
-        .has_headers(false)
-        .delimiter(b' ')
-        .flexible(true)
-        .from_reader(file);
-
-    // A vector of Vec<u32> records, which represents the data
-    // in the source file as integer values
-    let mut file_records: Vec<Vec<u32>> = Vec::new();
-
-    // For each of the CSV reader records, lets parse it into the
-    // proper data structure
-    for result in rdr.records() {
-        let record = result?;
-
-        // A vector of u32 to represent this CSV file's row
-        let mut rec_vec: Vec<u32> = Vec::new();
-        for field in record.iter() {
-            let val: u32 = field.parse().unwrap_or(0);
-            rec_vec.push(val);
-        }
-
-        // Push it onto the master file's Vector of Vec<u32>s
-        file_records.push(rec_vec);
-    }
-
-    // Return OK with the rows
-    Ok(file_records)
-}
-
 pub fn run() {
-    let mut triangle: Vec<Vec<u32>> = process_file().unwrap_or(vec![vec![0]]);
+    let mut triangle: Vec<Vec<u32>> =
+        shared::read_vector("../shared/18.txt").unwrap_or(vec![vec![0]]);
     triangle.reverse();
 
     let mut agg = (&triangle[0]).to_vec();
@@ -75,6 +40,3 @@ fn highest_values(upper: &Vec<u32>, lower: &Vec<u32>) -> Vec<u32> {
 
     return v;
 }
-
-
-

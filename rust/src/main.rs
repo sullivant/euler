@@ -32,6 +32,7 @@ fn main() {
         16 => problems::p16::run(),
         17 => problems::p17::run(),
         18 => problems::p18::run(),
+        19 => problems::p19::run(),
         67 => problems::p67::run(),
         x @ _ => println!("Problem {} not ready yet.", x),
     }
